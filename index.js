@@ -13,10 +13,10 @@ app.use(express.json());
 app.use(cors({origin: '*'}));
 
 //routes
-app.get("/", (req, res) =>{
+app.get("/test/message", (req, res) =>{
     res.json({message: "Bienvenido al testing"});
 });
-//app.use('/test/users', require('./routes/users.routes'));
+app.use('/test/users', require('./routes/users.routes'));
 
 //server response PORT
 app.listen(app.get('port'), () =>{
