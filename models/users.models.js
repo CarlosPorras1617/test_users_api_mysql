@@ -8,8 +8,8 @@ const Users = function(user){
 
 Users.getUsers = (name, result)=>{
     let query = "SELECT * FROM testusers";
-    if(title){
-        query += ` WHERE name LIKE '%${title}%'`;
+    if(name){
+        query += ` WHERE name LIKE '%${name}%'`;
     }
     sql.query(query, (err,res)=>{
         if(err){
