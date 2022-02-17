@@ -22,4 +22,20 @@ Users.getUsers = (name, result)=>{
     });
 };
 
+Users.getById = (id, result)=>{
+    sql.query(`SELECT * FROM testusers WHERE iduser = ${id}`, (err, res)=>{
+        if(err){
+            console.log("error ", err);
+            result(err, null);
+            return;
+        }
+        if(res.length){
+            console.log("Usuario encontrado; ", res[0]);
+            result(null, res[0]);
+            return;
+        }
+        result({kind: "No_encontrado"}, null);
+    });
+};
+
 module.exports = Users;
