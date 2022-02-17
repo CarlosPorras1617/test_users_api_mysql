@@ -38,4 +38,20 @@ Users.getById = (id, result)=>{
     });
 };
 
+Users.deleteUser = (id, result)=>{
+    sql.query( "DELETE FROM testusers WHERE iduser = ?", id, (err, res)=>{
+        if(err){
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+        if(res.affectedRows == 0){
+            result({kind: "No_encontrado"}, null);
+            return;
+        }
+        console.log("Usuario eliminado con el siguiente ID: ", id);
+        result(null, res);
+    });
+};
+
 module.exports = Users;

@@ -27,5 +27,23 @@ exports.getById = async (req, res)=>{
             res.send(data);
         }
     });
-}
+};
+
+exports.deleteUser = async (req, res)=>{
+    usersModels.deleteUser(req.params.id, (err, data)=>{
+        if(err){
+            if(err.kind === "No_encontrado"){
+                res.status(404).send({
+                   message: `No se encontro usuario con el ID: ${req.params.id}` 
+                });
+            }else{
+                res.status(500).send({
+                    message: "No se puede eliminar el usuario"
+                });
+            }
+        }else{
+            res.send({message: `Usuario eliminado correctamente`});
+        }
+    });
+};
 
