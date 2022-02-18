@@ -1,3 +1,4 @@
+const Users = require('../models/users.models');
 const usersModels = require('../models/users.models');
 
 exports.getUsers = async (req, res)=>{
@@ -43,6 +44,31 @@ exports.deleteUser = async (req, res)=>{
             }
         }else{
             res.send({message: `Usuario eliminado correctamente`});
+        }
+    });
+};
+
+exports.createUser=(req, res)=>{
+    //validamos el usuario
+    if(!req.body){
+        res.status(400).send({
+            message:"No puede estar vacio"
+        });
+    }
+    //creamos el tutorial con el constructor del model
+    const user = new Users({
+        name: req.body.name,
+        lastname: req.body.lastname,
+        age: req.body.age
+    });
+    //guardamos el usuario
+    Users.createUser(user, (err, data)=>{
+        if(err)
+        res.status(500).send({
+            message: err.message || "Ha ocurrido algun error inesperado"
+        });
+        else{
+            res.send(data);
         }
     });
 };

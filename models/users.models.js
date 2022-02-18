@@ -54,4 +54,16 @@ Users.deleteUser = (id, result)=>{
     });
 };
 
+Users.createUser = (newUser, result)=>{
+    sql.query("INSERT INTO testusers SET ?", newUser, (err, res)=>{
+        if(err){
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+        console.log("Usuario creado: ", {id: res.insertId, ...newUser});
+        result(null, {id: res.insertId, ...newUser});
+    });
+};
+
 module.exports = Users;
