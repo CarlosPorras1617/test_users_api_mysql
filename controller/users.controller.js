@@ -1,3 +1,4 @@
+const req = require('express/lib/request');
 const Users = require('../models/users.models');
 const usersModels = require('../models/users.models');
 
@@ -71,5 +72,31 @@ exports.createUser=(req, res)=>{
             res.send(data);
         }
     });
+};
+
+exports.updateUser = (req, res) => {
+    //validamos la peticion
+    if(!req.body){
+        res.status(400).send({
+            message:"El contenido no puede estar vacio"
+        });
+    }
+    console.log(req.body);
+    usersModels.updateUser(req.params.id, new Users(req.body), (err, data) =>{
+        if(err){
+           if(err.kind === "No_encontrado"){
+               res.status(404).send({
+                   message:`No se encontro ese usaurio con ese ID: ${req.params.id}`
+               });
+           }else{
+               res.status(500).send({
+                  message:"Error al actualizar el usuario con ese ID " + req.params.id 
+               });
+           }
+        }else{
+            //si lo actualiza que retorne el usaurio ya actualizado
+            res.send(data);
+        }
+    })
 };
 

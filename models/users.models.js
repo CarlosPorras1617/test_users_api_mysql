@@ -66,4 +66,24 @@ Users.createUser = (newUser, result)=>{
     });
 };
 
+Users.updateUser = (id, user, result)=>{
+    sql.query("UPDATE testusers SET name = ?, lastname = ?, age = ? WHERE iduser = ?",
+    [user.name, user.lastname, user.age, id],
+    (err, res)=>{
+        if(err){
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+        if(res.affectedRows == 0){
+            //no se encontro usuario para actualizar
+            result({kind: "No_encontrado"}, null);
+            return;
+        }
+        console.log("Usario actualizado ", {id: id, ...user});
+        result(null, {id: id, ...user});
+    }
+    );
+};
+
 module.exports = Users;
